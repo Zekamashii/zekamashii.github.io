@@ -1,145 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Flight Map</title>
 
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet
-    font-family:Arial,sans-serif;
+<link rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+html, body {
+    margin: 0;
+    height: 100%;
 }
 
-header{
-    background:#0b3d91;
-    color:white;
-    padding:15px 20px;
-}
-
-header h1{
-    margin:0;
-    font-size:24px;
-}
-
-#map{
-    height:calc(100vh - 62px);
-    width:100%;
-}
-
-.legend{
-    position:absolute;
-    top:80px;
-    right:10px;
-    z-index:1000;
-    background:white;
-    padding:10px;
-    border-radius:8px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.2);
+#map {
+    width: 100%;
+    height: 100vh;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <h1>Flight Logbook Map</h1>
-</header>
-
 <div id="map"></div>
 
-<div class="legend">
-    <strong>Routes</strong><br>
-    Blue lines = Flights
-</div>
-
-<script src="https://unpkg.com//dist/leaflet.jsscript>
+https://unpkg.com/leaflet@1.9.4/dist/leaflet.jsscript>
 
 <script>
-const map = L.map('map').setView([48.16, -122.16], 8);
+const map = L.map('map').setView([48.1607, -122.1590], 8);
 
 L.tileLayer(
     'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
-        maxZoom: 19,
         attribution: '&copy; OpenStreetMap contributors'
     }
 ).addTo(map);
 
-const airports = {
-    KAWO:[48.1607,-122.1590],
-    KPAE:[47.9063,-122.2819],
-    KBLI:[48.7927,-122.5375],
-    KBVS:[48.4709,-122.4187],
-    KTIW:[47.2679,-122.5781],
-    KCLM:[48.1202,-123.4997],
-    KSHN:[47.2336,-123.1481],
-    KORS:[48.7082,-122.9108],
-    KFHR:[48.5219,-123.0242],
-    KRNT:[47.4931,-122.2160],
-    KPWT:[47.4902,-122.7648],
-    KPLU:[47.1039,-122.2872],
-    KBFI:[47.5300,-122.3019]
-};
-
-const flights = [
-    {from:"KAWO",to:"KBLI",date:"2018-07-24"},
-    {from:"KAWO",to:"KCLM",date:"2018-07-31"},
-    {from:"KAWO",to:"KTIW",date:"2018-08-08"},
-    {from:"KAWO",to:"KBLI",date:"2018-08-24"},
-    {from:"KAWO",to:"KCLM",date:"2018-08-27"},
-    {from:"KAWO",to:"KSHN",date:"2018-08-30"},
-    {from:"KAWO",to:"KTIW",date:"2018-09-18"},
-    {from:"KAWO",to:"KBVS",date:"2018-11-17"},
-    {from:"KAWO",to:"KBVS",date:"2018-11-18"},
-    {from:"KAWO",to:"KORS",date:"2019-04-15"},
-    {from:"KORS",to:"KFHR",date:"2019-04-15"},
-    {from:"KAWO",to:"KBFI",date:"2019-04-16"},
-    {from:"KAWO",to:"KPLU",date:"2019-04-25"},
-    {from:"KPLU",to:"KAWO",date:"2019-04-25"},
-    {from:"KAWO",to:"KPWT",date:"2019-05-03"},
-    {from:"KPWT",to:"KAWO",date:"2019-05-03"},
-    {from:"KAWO",to:"KRNT",date:"2019-05-31"},
-    {from:"KAWO",to:"KPAE",date:"2019-06-01"}
-];
-
-const airportMarkers = new Set();
-
-flights.forEach(flight => {
-
-    const from = airports[flight.from];
-    const to = airports[flight.to];
-
-    if (!from || !to) return;
-
-    if (!airportMarkers.has(flight.from)) {
-        L.marker(from)
-            .addTo(map)
-            .bindPopup(flight.from);
-        airportMarkers.add(flight.from);
-    }
-
-    if (!airportMarkers.has(flight.to)) {
-        L.marker(to)
-            .addTo(map)
-            .bindPopup(flight.to);
-        airportMarkers.add(flight.to);
-    }
-
-    L.polyline(
-        [from, to],
-        {
-            color: "#1e88e5",
-            weight: 3,
-            opacity: 0.8
-        }
-    )
+L.marker([48.1607, -122.1590])
     .addTo(map)
-    .bindPopup(
-        `${flight.date}<br>${flight.from} → ${flight.to}`
-    );
-});
+    .bindPopup('KAWO');
 </script>
 
 </body>
